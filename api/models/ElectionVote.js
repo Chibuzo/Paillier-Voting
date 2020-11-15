@@ -18,15 +18,15 @@ module.exports = {
         },
 
         publicKey: {
-            type: 'string'
+            type: 'mediumtext'
         },
 
         privateKey: {
-            type: 'string'
+            type: 'mediumtext'
         },
 
         result: {
-            type: 'string'
+            type: 'text'
         }
     }
 };

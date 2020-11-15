@@ -13,11 +13,11 @@ module.exports = {
         },
 
         election: {
-            model: 'election'
+            model: 'electionvote'
         },
 
         vote: {
-            type: 'string'
+            type: 'text'
         }
     }
 };

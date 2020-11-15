@@ -18,6 +18,14 @@ module.exports = {
 
         position: {
             type: 'string'
+        },
+
+        dataBlock: {
+            type: 'integer'
+        },
+
+        photo: {
+            type: 'string'
         }
     }
 };

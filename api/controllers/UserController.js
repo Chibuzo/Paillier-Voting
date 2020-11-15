@@ -96,7 +96,7 @@ module.exports = {
                     req.session.user_type = 'user';
                     req.session.fullname = foundUser.fullname;
                     //return res.json(200, {status: 'success'});
-                    return res.redirect("/vote");
+                    return res.redirect("/cast-vote");
                 }
             });
         });

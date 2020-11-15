@@ -7,14 +7,33 @@
 
 module.exports = {
 	async vote(req, res) {
-        const { candidate, election } = req.param;
+        if (!req.session.userId) {
+            return res.json({ 
+                status: 'error', 
+                message: 'Not authorized' 
+            });
+        }
+
+        const { candidate, election } = req.body;
+        
         const vote = {
             user: req.session.userId,
             candidate,
             election
         };
 
-        const voteStatus = await PaillierService.countVote(vote);
+        try {
+            const cipherText = await PaillierService.computeVote(vote);
+            return res.json({ 
+                status: 'success', 
+                cipherText 
+            });
+        } catch (err) {
+            return res.json({ 
+                status: 'error', 
+                message: err.message 
+            });
+        }
     }
 };
 

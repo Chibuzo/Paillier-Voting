@@ -2,6 +2,13 @@
 const paillier = require('paillier-js');
 var bigInt = require("big-integer");
 
+// const candidates = {
+//     c1: 1,
+//     c2: 16,
+//     c3: 256,
+//     c4: 4096
+// };
+
 var timer = function(name) {
     var start = new Date();
     return {
@@ -17,9 +24,12 @@ var timer = function(name) {
 // 10 voters 
 
 var t = timer('Start');
+console.log('starts...');
 // create random keys
 const { publicKey, privateKey } = paillier.generateRandomKeys(2048);
-
+console.log('Keys created');
+console.log(publicKey)
+console.log({publicKey})
 const m1 = bigInt(16);    // C
 const m2 = bigInt(16);    // C
 const m3 = bigInt(16);    // C
@@ -42,8 +52,12 @@ let c7 = publicKey.encrypt(m7);
 let c8 = publicKey.encrypt(m8);
 let c9 = publicKey.encrypt(m9);
 let c10 = publicKey.encrypt(m10);
+console.log({c8})
+console.log({c7})
 
-let encryptedSum = publicKey.addition(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10);
+//let encryptedSum = publicKey.addition(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10);
+let encryptedSum = publicKey.addition(0, c8);
+console.log({encryptedSum})
  
 // decrypt c
 let d = privateKey.decrypt(encryptedSum);

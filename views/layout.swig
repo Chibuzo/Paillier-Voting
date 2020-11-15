@@ -28,27 +28,12 @@
 		<div class="navbar-left">
 		 <div class="collapse navbar-collapse" id="navbar-collapse">
 		  <ul class="nav navbar-nav">
-		   <li class="active"><a href="https://www.themashabrand.com/scripts/Voting/">Home</a></li>
-		   <li class=""><a href="https://www.themashabrand.com/scripts/Voting//how">How it works</a></li>
+		   <li class="active"><a href="/cast-vote">Vote</a></li>
+		   <li class=""><a href="admin/result">Results</a></li>
 		  </ul>
 		 </div>
 		</div><!-- /.navbar-left -->
-		<div class="navbar-right">  
-
-		 <ul class="nav navbar-nav">
-              <li class="dropdown user user-menu">
-                <!-- Menu Toggle Button -->
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                
-                  <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                  <span class="hidden-xs">
-                  	Languages                  </span>
-                </a>
-                <ul class="dropdown-menu">
-                	<li class="m_2"><a onclick="changelanguage(456316203361)" style="cursor: pointer;">English</a></li><li class="m_2"><a onclick="changelanguage(492663265157)" style="cursor: pointer;">Spanish</a></li>	
-        		</ul>
-              </li>
-           </ul>  
+		<div class="navbar-right"> 
 		 	
 		 	
 		 <ul class="nav navbar-nav">

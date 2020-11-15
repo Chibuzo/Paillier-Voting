@@ -6,7 +6,7 @@ module.exports.routes = {
 
     '/register': { view: 'register' },
 
-    '/vote': { view: 'vote' },
+    'GET /cast-vote': 'CandidatesController.list',
 
     'GET /login': { view: 'login' },
 
@@ -16,5 +16,13 @@ module.exports.routes = {
 
     'POST /user/login': 'UserController.login',
 
-    'POST /vote': 'VoteController.vote',
+    'GET /candidate': { view: 'candidate' },
+
+    'POST /candidate': 'CandidatesController.save',
+
+    'POST /cast-vote': 'VoteController.vote',
+
+    '/generate-keys/:id': 'ElectionVoteController.generateKeyParameters',
+
+    'GET /admin/result': 'ElectionVoteController.resultPage',
 };

@@ -21,7 +21,8 @@ module.exports = {
         },
 
         dataBlock: {
-            type: 'integer'
+            type: 'integer',
+            defaultsTo: 0
         },
 
         photo: {

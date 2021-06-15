@@ -96,13 +96,13 @@ module.exports = {
                     req.session.user_type = 'user';
                     req.session.fullname = foundUser.fullname;
                     //return res.json(200, {status: 'success'});
-                    return res.redirect("/cast-vote");
+                    return res.redirect("/elections");
                 }
             });
         });
     },
 
-    signout: function (req, res) {
+    logout: function (req, res) {
         if (!req.session.userId) return res.redirect('/');
         User.findOne(req.session.userId, function foundUser(err, createdUser) {
             if (err) return res.negotiate(err);

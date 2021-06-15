@@ -1,12 +1,14 @@
 module.exports.routes = {
 
     '/': {
-        view: 'index'
+        view: 'login'
     },
 
     '/register': { view: 'register' },
 
-    'GET /cast-vote': 'CandidatesController.list',
+    '/logout': 'UserController.logout',
+
+    'GET /cast-vote/:electionid': 'CandidatesController.list',
 
     'GET /login': { view: 'login' },
 
@@ -18,11 +20,15 @@ module.exports.routes = {
 
     'GET /candidate': { view: 'candidate' },
 
+    'GET /elections': 'ElectionVoteController.electionPage',
+
+    'POST /create-election': 'ElectionVoteController.createElection',
+
     'POST /candidate': 'CandidatesController.save',
 
     'POST /cast-vote': 'VoteController.vote',
 
-    '/generate-keys/:id': 'ElectionVoteController.generateKeyParameters',
+    //'/generate-keys/:id': 'ElectionVoteController.generateKeyParameters',
 
-    'GET /admin/result': 'ElectionVoteController.resultPage',
+    'GET /admin/result/:electionid': 'ElectionVoteController.resultPage',
 };

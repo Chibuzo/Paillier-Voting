@@ -7,7 +7,10 @@
         <div class="panel">
             <div class="panel-body" style="word-wrap: break-word">{{ rawResult }}</div>
         </div>    
-        <br />
+        <div class="row">
+            <div class="col-xs-6"><div id=""><strong>Result tally took {{ duration }} ms</strong></div><br></div>
+        </div>   
+        <br>
         <button class="kafe-btn kafe-btn-mint-small btn-lg" id="load-result">Load SecretKey & decrypt</button>
     </div>
 
@@ -31,7 +34,11 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}    
+        {% endfor %}   
+
+        <div class="row">
+            <div class="col-xs-6  col-xs-offset-3 text-center"><div id="timer" style="font-weight: bold"></div><br></div>
+        </div>    
     </div>
 </div>
 {% endblock %}
@@ -39,14 +46,29 @@
 <script>
 $(document).ready(function() {
     $("#load-result").click(function() {
+        const t = timer('Decrypt');
         const $this = $(this);
         $this.html("<i class='fa fa-cogs fa-spin'></i> <i>Decrypting...</i>");
         setTimeout(function() {
             $(".pending").hide();
             $(".result").removeClass("hidden");
             $this.text("Load SecretKey & decrypt");
-        }, 7000);
+            const duration = t.stop();
+            $("#timer").text("Decrypting result took " + duration + " ms");
+        }, 1000);
     });
 });
+
+const timer = function(name) {
+    var start = new Date();
+    return {
+        stop: function() {
+            var end  = new Date();
+            var time = end.getTime() - start.getTime();
+            console.log('Timer:', name, 'finished in', time, 'ms');
+            return time;
+        }
+    }
+};
 </script>
 {% endblock %}

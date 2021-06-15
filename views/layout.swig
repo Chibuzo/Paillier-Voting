@@ -23,13 +23,12 @@
 		  <span class="icon-bar"></span>
 		  <span class="icon-bar"></span>
 		 </button>
-		 <a class="navbar-brand" href="https://www.themashabrand.com/scripts/Voting/">Voting</a>
+		 <a class="navbar-brand" href="/">Voting</a>
 		</div><!-- /.navbar-header -->
 		<div class="navbar-left">
 		 <div class="collapse navbar-collapse" id="navbar-collapse">
 		  <ul class="nav navbar-nav">
-		   <li class="active"><a href="/cast-vote">Vote</a></li>
-		   <li class=""><a href="admin/result">Results</a></li>
+		   <li class="active"><a href="/elections">Elections</a></li>
 		  </ul>
 		 </div>
 		</div><!-- /.navbar-left -->
@@ -39,7 +38,11 @@
 		 <ul class="nav navbar-nav">
 		 	
 		  <li><i class="fa fa-user"></i></li>
-		  <li class=""><a href="/login">Login</a></li>
+      {% if req.session.userId %}
+        <li><a href='/logout'>Logout</a></li>
+      {% else %}  
+		    <li class=""><a href="/login">Login</a></li>
+      {% endif %}  
 		 </ul><!-- /.sign-in -->   
 		 <a href="/register" class="kafe-btn kafe-btn-mint-small">
 		 	Register		 	as		 	a		 	Voter		 </a>

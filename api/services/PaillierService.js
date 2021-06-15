@@ -25,7 +25,7 @@ const computeVote = async ({ user, candidate: candidateId, election: electionId 
 
 const updateTotalVotes = async (electionId, currentVote, publicKey, initialResult) => {
     const result = publicKey.addition(initialResult, currentVote);
-    await ElectionVote.update(electionId, { result });
+    await ElectionVote.update(electionId, { result: String(result) });
 }
 
 const recreatePubKey = ({ n, g }) => {
@@ -73,11 +73,6 @@ const breakupResult = (resultBinary, digits, numOfCandidates) => {
         }
     }
     return separateResults;
-    // if (separateResults[numOfCandidates - 1].length < digits) {
-    //     separateResults[numOfCandidates - 1] = separateResults[numOfCandidates - 1].padStart(digits, '0');
-    // }
-    // console.log({resultBinary})
-    // console.log({separateResults});
 }
 
 const sumResult = async (election, publicKey, privateKey) => {
@@ -93,5 +88,6 @@ const sumResult = async (election, publicKey, privateKey) => {
 module.exports = {
     computeVote,
     breakupResult,
+    recreatePubKey,
     decryptResult
 }

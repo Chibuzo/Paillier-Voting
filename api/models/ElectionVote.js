@@ -26,7 +26,7 @@ module.exports = {
         },
 
         result: {
-            type: 'text'
+            type: 'mediumtext'
         }
     }
 };

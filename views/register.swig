@@ -19,7 +19,7 @@
 		  <div class="form-sign">
 		   <form action="/user" method="post">
 		    <div class="formhead">
-			 <h3>Register</h3>
+			 <h3>Voter Registration</h3>
 			</div><!-- /.form-head -->
             <div class="form-body">            	
             	
@@ -97,6 +97,12 @@
                     </div><!-- /.form-controls -->
                 </div>    
 		     </div><!-- /.form-row -->
+
+             <div class="form-row">
+			  <div class="form-controls">
+			   <input type="text" name="age" class="field" placeholder="Age">
+			  </div><!-- /.form-controls -->
+             </div><!-- /.form-row -->
 		   
 			 </div><!-- /.form-body -->
 	

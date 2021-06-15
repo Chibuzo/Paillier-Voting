@@ -7,6 +7,7 @@
 
 module.exports = {
 	async vote(req, res) {
+        const timer = ElectionService.timer('Voting timer');
         if (!req.session.userId) {
             return res.json({ 
                 status: 'error', 
@@ -24,11 +25,14 @@ module.exports = {
 
         try {
             const cipherText = await PaillierService.computeVote(vote);
+            const duration = timer.stop();
             return res.json({ 
                 status: 'success', 
-                cipherText 
+                cipherText,
+                duration 
             });
         } catch (err) {
+            console.log(err)
             return res.json({ 
                 status: 'error', 
                 message: err.message 

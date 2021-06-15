@@ -11,7 +11,7 @@
 		  <div class="form-sign">
 		   <form action="/login" method="post">
 		    <div class="formhead">
-			 <h3>Authentication</h3>
+			 <h3>Voter Login</h3>
 			</div><!-- /.form-head -->
             <div class="form-body">            	
              

@@ -5,32 +5,34 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
- const paillier = require('paillier-js');
+ const bigInt = require("big-integer");
 
 module.exports = {
-	async generateKeyParameters(req, res) {
-        if (!req.params.id) return res.badRequest('Provide an ID for the election to generate keys for');
-        const electionVote = req.params.id;
+    async createElection(req, res) {
         try {
-            const { public_keys, private_keys } = CryptoFns.generateKeyDeterminants(2048);
-            
-            // const { publicKey, privateKey } = paillier.generateRandomKeys(2048)
-            // console.log('n: ' + publicKey.n);
-            // console.log('g: ' + publicKey.g);
-            // console.log('lambda: ' + privateKey.lambda);
-            // console.log('mu: ' + privateKey.mu)
-            // console.log('q: ', + privateKey._q);
-            // const { n, g } = publicKey;
-            // const { lambda, mu, _p: p, _q: q } = privateKey;
+            const election = await ElectionVote.create({ election: req.body.election });
+
+            const { public_keys, private_keys } = CryptoFns.generateKeyDeterminants(128);
+
+            const publicKey = PaillierService.recreatePubKey(public_keys);
             
             const data = {
                 publicKey: JSON.stringify(public_keys),
                 privateKey: JSON.stringify(private_keys),
-                result: 0
+                result: String(publicKey.encrypt(bigInt(0)))
             };
-            await ElectionVote.update(electionVote, data);
-            res.ok();
+            await ElectionVote.update(election.id, data);
+            res.json({ status: true });
         } catch(err) {
+            console.log(err);
+        }
+    },
+
+    async electionPage(req, res) {
+        try {
+            const elections = await ElectionVote.find().populate('candidates');
+            return res.view('election', { elections });
+        } catch (err) {
             console.log(err);
         }
     },
@@ -38,15 +40,20 @@ module.exports = {
 
     async resultPage(req, res) {
         try {
-            const electionId = 1;
+            const timer = ElectionService.timer('Result timer');
+            const { electionid } = req.params;
+            if (!electionid) throw new Error('No election was selected')
+
             const { 
                 decryptedResult,
                 result,
                 candidates 
-            } = await PaillierService.decryptResult(electionId);
+            } = await PaillierService.decryptResult(electionid);
             const rawResult = result;
             
-            const individualResults = PaillierService.breakupResult(decryptedResult.toString(2), 4, 4);
+            const numOfCandidates = 4; // number of candidates for this particular election. This does not necessarilly have to be hardcoded
+            const subBlock = 8; // key length divided by number of candidates
+            const individualResults = PaillierService.breakupResult(decryptedResult.toString(2), subBlock, numOfCandidates);
             const totalVotes = individualResults.reduce((sum, count) => {
                 return sum + count;
             });
@@ -58,11 +65,13 @@ module.exports = {
                 };
             });
 
+            const duration = timer.stop();
             return res.view('admin/result', { 
                 rawResult, 
                 result: decryptedResult.toString(), 
                 totalVotes, 
-                candidates: candidateResults 
+                candidates: candidateResults,
+                duration
             });
         } catch (err) {
             console.log(err);

@@ -2,12 +2,12 @@
 
 {% block body %}
 <div class="section-title" style="padding-top: 20px;">
-    <h1>{{ candidates[0].election.election }} Election</h1>
+    <h1>{{ election.election }}</h1>
 </div>
 <div class="text-center"><h3>Total Votes: <span id="vote-count">{{ vote_count }}</span></h3></div><br>
 	   
     <!-- START OF INTERNAL ROW --><div class="row">
-{% for candidate in candidates %}
+{% for candidate in election.candidates %}
     <div class="col-lg-3">	            
         <div class="text-center card-box">
             <div class="clearfix"></div>
@@ -20,17 +20,20 @@
                 <div class="">
                     <h4 class="m-b-5">{{ candidate.fullname }}</h4>
                     <p class="text-danger"><i class="fa fa-thumbs-o-up"></i>Votes: Pending</p> 
-                    <p> <span><span class="text-muted">Running to Be: </span><span class="text-mint">{{ candidate.election.election }}</span> </span></p>
+                    <p> <span><span class="text-muted">Running to Be: </span><span class="text-mint">{{ election.election }}</span> </span></p>
                 </div>
 
             
-                <a href="" class="kafe-btn kafe-btn-danger-small vote" data-candidate="{{ candidate.id }}" data-election="{{ candidate.election.id }}"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> vote</a>
+                <a href="" class="kafe-btn kafe-btn-danger-small vote" data-candidate="{{ candidate.id }}" data-election="{{ election.id }}"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> vote</a>
             </div>
         </div>
     </div>
 {% endfor %}    
 </div>
 
+<div class="row">
+    <div class="col-xs-6  col-xs-offset-3 text-center"><div id="timer"></div><br></div>
+</div>    
 <div class="row">
     <div class="col-xs-6 col-xs-offset-3 text-center"><div class="panel"><div class="panel-body" style="word-wrap: break-word"></div></div></div>
 </div>
@@ -54,6 +57,7 @@ $(document).ready(function() {
                         vote_count += 1;
                         $('#vote-count').text(vote_count);
                         $(".panel-body").text(d.cipherText);
+                        $("#timer").text(`Voting took: ${d.duration} seconds`);
                     }
                 }
             }, 'JSON');
